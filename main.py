@@ -25,8 +25,12 @@ comparisons = {
     "==" "ISEQ"
 }
 
+boolResult = {
+    "True": "TRUE",
+    "False": "FALSE"
+}
 
-SYMBOLS = '+-*/()<>=!;'
+SYMBOLS = '+-*/()<>=!;"'
 DIGITS = '0123456789.'
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
@@ -53,10 +57,14 @@ def lex(line):
             tok.append(Token("DATATYPE",dataTypes[i]))
         elif(i in comparisons):
             tok.append(Token("COMPARISON",comparisons[i]))
+        elif(i in boolResult):
+            tok.append(Token("BOOLRESULT",boolResult[i]))
         elif(i == ";"):
             tok.append(Token("SEMICOLON",i))
         elif(i == "="):
             tok.append(Token("ASSIGN",i))
+        elif(i == "\""):
+            tok.append(Token("QUOTE",i))
         elif(i.isdigit()):
             tok.append(Token("INTEGER", i))
         elif(i[0].isdigit()):
@@ -89,7 +97,9 @@ def lex(line):
 
 
 
-print('5'.isdigit())
-line = 'int x = 10.5'
+line = 'String y = " Hello " ;'
+line2 = 'boolean isTrue = True'
 tokenList = lex(line)
+tokenList2 = lex(line2)
 print(tokenList)
+print(tokenList2)
