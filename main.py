@@ -1,3 +1,4 @@
+from parser import parser
 
 operators = {
     "+": "ADD",
@@ -23,6 +24,11 @@ comparisons = {
     ">=": "GREATEREQ",
     "!=": "NOTEQ"
     "==" "ISEQ"
+}
+
+keywords = {
+    "if": "IF_STMT",
+    "while": "WHILE"
 }
 
 boolResult = {
@@ -59,6 +65,8 @@ def lex(line):
             tok.append(Token("COMPARISON",comparisons[i]))
         elif(i in boolResult):
             tok.append(Token("BOOLRESULT",boolResult[i]))
+        elif(i in keywords):
+            tok.append(Token("KEYWORD",keywords[i]))
         elif(i == ";"):
             tok.append(Token("SEMICOLON",i))
         elif(i == "="):
@@ -97,9 +105,8 @@ def lex(line):
 
 
 
-line = 'String y = " Hello " ;'
-line2 = 'boolean isTrue = True'
+line = 'int abc = 10 + 5 ;'
 tokenList = lex(line)
-tokenList2 = lex(line2)
 print(tokenList)
-print(tokenList2)
+p = parser(tokenList)
+p.startParse()
